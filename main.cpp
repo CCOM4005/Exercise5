@@ -8,29 +8,22 @@ struct node
     node *next;
 }; 
 
-int buscar(node * , int);
-void otherprocessList(node *&, node *&);
-void processList( int&, node *&, node *&, node *&, node *&,node *& ); 
+void mergeLists(node *&, node *&);
+void createRandList( int&, node *&, node *&, node *&, node *&,node *& ); 
 void print( node *&, node *&, node *&,node *&, node *&, node *&);
 
 int main ()
 
 { 
-    node *start,  *nuevo, *fin, *p;
-    node *start2,  *nuevo2, *fin2, *p2;
-    node *start3,  *nuevo3, *fin3, *p3;
-    int cant, cant2, valor, valor2,cantTotal;
+    node *head,  *newNode, *tail, *current;
+    node *head2,  *newNode2, *tail2, *current2;
+    node *head3,  *newNode3, *tail3, *current3;
+    int cant, cant2, value, value2,cantTotal;
 
     
-    start = NULL;
-    start2 = NULL; 
-    start3 = NULL; 
-    nuevo = NULL;
-    nuevo2 = NULL; 
-    nuevo3 = NULL;
-    fin = NULL;
-    fin2 = NULL;
-    fin3 = NULL; 
+    head = head2 = head3 = NULL; 
+    newNode = newNode2 = newNode3 = NULL;
+    tail = tail2 = tail3 = NULL; 
     	
 	cout<<"Entre la cantidad de elementos de la lista uno: ";
 	cin>>cant;
@@ -38,100 +31,101 @@ int main ()
 
     for (int i = 0; i < cant; i++)
     {
-        cout << "Indique el valor de la lista: ";
-        cin >> valor;
-        nuevo = new node;
-        nuevo -> info = valor;
-        nuevo -> next = NULL;
+        cout << "Indique el valor del numero entero: ";
+        cin >> value;
+        newNode = new node;
+        newNode->info = value;
+        newNode->next = NULL;
 
-        if (start == NULL)
+        if (head == NULL)
         {
-                start = nuevo;
-                fin = nuevo;
+                head = newNode;
+                tail = newNode;
         }
         else 
         {
-            fin -> next = nuevo;
-            fin = nuevo;
+            tail->next = newNode;
+            tail = newNode;
         }
     }
     cout<<"Entre la cantidad de elementos de la lista dos: ";
 	cin>>cant2;
     for (int i = 0; i < cant2; i++)
     {
-        cout << "Indique el valor de la lista: ";
-        cin >> valor2;
-        nuevo2 = new node;
-        nuevo2 -> info = valor2;
-        nuevo2 -> next = NULL;
+        cout << "Indique el valor del numero entero: ";
+        cin >> value2;
+        newNode2 = new node;
+        newNode2->info = value2;
+        newNode2->next = NULL;
 
-        if (start2 == NULL)
+        if (head2 == NULL)
         {
-                start2 = nuevo2;
-                fin2 = nuevo2;
+                head2 = newNode2;
+                tail2 = newNode2;
         }
         else 
         {
-            fin2 -> next = nuevo2;
-            fin2 = nuevo2;
+            tail2->next = newNode2;
+            tail2 = newNode2;
         }
     }
     cantTotal=cant+cant2;
     
-  otherprocessList(fin, start2 );
-  processList(cantTotal, start,p, nuevo3,start3,fin3);
- 	print( start,start2, start3,p,p2,p3);
+  mergeLists(tail, head2 );
+  createRandList(cantTotal, head,current, newNode3,head3,tail3);
+  print( head,head2, head3,current,current2,current3);
   
     system ("pause");
 return 0;
 }
 
-void otherprocessList(node *&fin, node *&start2)
+void mergeLists(node *&tail, node *&head2)
 {
-     fin->next=start2;
+     tail->next=head2;
 }
-void processList(int &cantTotal, node *&start,node *&p, node *&list3, node *&start3, node *&fin3)
+void createRandList(int &cantTotal, node *&head,node *&current, node *&list3, node *&head3, node *&tail3)
 {
      int randNum=0;
      for(int i=0;i<cantTotal; i++)
      {
-        p = start;
+        current = head;
         list3=NULL;
+        srand(time_t(NULL));
     	randNum= rand()% cantTotal + 1;
         for(int j=0;j<randNum-1; j++)
         {
-        	p = p -> next;
+        	current = current -> next;
         } 
         
         list3 = new node;
-        list3 -> info = p->info;
+        list3 -> info = current->info;
 		list3 -> next = NULL;
 		
 		
-		if (start3 == NULL)
+		if (head3 == NULL)
         {
-            start3 = list3;
-            fin3 = list3;
+            head3 = list3;
+            tail3 = list3;
        	}
        	
        	else 
       	{
-         	fin3 -> next = list3;
-        	fin3 = list3;
+         	tail3 -> next = list3;
+        	tail3 = list3;
       	}  
 						
       
       }
 }
-void print(node *&start, node *&start2, node *&start3, node *&p, node *&p2, node *&p3)
+void print(node *&head, node *&head2, node *&head3, node *&current, node *&current2, node *&current3)
 {
 
     cout<<"\nElementos de la nueva lista random: " ;
-    p3= start3;
-    while(p3 !=NULL)
+    current3 = head3;
+    while(current3 !=NULL)
     {
-             cout<< p3->info<< " ";
-             p3= p3->next;
+             cout<< current3->info<< " ";
+             current3= current3->next;
      }
     cout<<endl<<endl;
      
